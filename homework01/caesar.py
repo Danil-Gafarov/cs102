@@ -14,8 +14,19 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    ciphertext = ""
-    # PUT YOUR CODE HERE
+    plaintext = list(map(ord, plaintext))
+    for i in range(len(plaintext)):
+        if 65 <= plaintext[i] <= 90:
+            plaintext[i] += shift
+            while plaintext[i] > 90:
+                plaintext[i] -= 26
+        elif 97 <= plaintext[i] <= 122:
+            plaintext[i] += shift
+            while plaintext[i] > 122:
+                plaintext[i] -= 26
+        plaintext[i] = chr(plaintext[i])
+    line = ""
+    ciphertext = line.join(plaintext)
     return ciphertext
 
 
@@ -32,8 +43,19 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    plaintext = ""
-    # PUT YOUR CODE HERE
+    ciphertext = list(map(ord, ciphertext))
+    for i in range(len(ciphertext)):
+        if 65 <= ciphertext[i] <= 90:
+            ciphertext[i] -= shift
+            while ciphertext[i] < 65:
+                ciphertext[i] += 26
+        elif 97 <= ciphertext[i] <= 122:
+            ciphertext[i] -= shift
+            while ciphertext[i] < 97:
+                ciphertext[i] += 26
+        ciphertext[i] = chr(ciphertext[i])
+    line = ""
+    plaintext = line.join(ciphertext)
     return plaintext
 
 
