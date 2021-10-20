@@ -12,23 +12,22 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     while len(keyword) < len(plaintext):
         keyword += keyword
     keyword = keyword.upper()
-    plaintext = list(map(ord, plaintext))
-    keyword = list(map(ord, keyword))
+    plaintext_list = list(map(ord, plaintext))
+    keyword_list = list(map(ord, keyword))
     j = 0
-    for i in range(len(plaintext)):
-        if 65 <= plaintext[i] <= 90:
-            plaintext[i] += (keyword[j] - 65)
-            while plaintext[i] > 90:
-                plaintext[i] -= 26
+    for i in range(len(plaintext_list)):
+        if 65 <= plaintext_list[i] <= 90:
+            plaintext_list[i] += keyword_list[j] - 65
+            while plaintext_list[i] > 90:
+                plaintext_list[i] -= 26
 
-        elif 97 <= plaintext[i] <= 122:
-            plaintext[i] += (keyword[j] - 65)
-            while plaintext[i] > 122:
-                plaintext[i] -= 26
+        elif 97 <= plaintext_list[i] <= 122:
+            plaintext_list[i] += keyword_list[j] - 65
+            while plaintext_list[i] > 122:
+                plaintext_list[i] -= 26
         j += 1
-        plaintext[i] = chr(plaintext[i])
     line = ""
-    ciphertext = line.join(plaintext)
+    ciphertext = line.join(map(chr, plaintext_list))
     return ciphertext
 
 
@@ -46,22 +45,25 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     while len(keyword) < len(ciphertext):
         keyword += keyword
     keyword = keyword.upper()
-    ciphertext = list(map(ord, ciphertext))
-    keyword = list(map(ord, keyword))
+    ciphertext_list = list(map(ord, ciphertext))
+    keyword_list = list(map(ord, keyword))
+    '''
+    plaintext_list = list(map(ord, plaintext))
+    keyword_list = list(map(ord, keyword))
+    '''
+
     j = 0
-    for i in range(len(ciphertext)):
-        if 65 <= ciphertext[i] <= 90:
-            ciphertext[i] -= (keyword[j] - 65)
-            while ciphertext[i] < 65:
-                ciphertext[i] += 26
+    for i in range(len(ciphertext_list)):
+        if 65 <= ciphertext_list[i] <= 90:
+            ciphertext_list[i] -= keyword_list[j] - 65
+            while ciphertext_list[i] < 65:
+                ciphertext_list[i] += 26
 
-        elif 97 <= ciphertext[i] <= 122:
-            ciphertext[i] -= (keyword[j] - 65)
-            while ciphertext[i] < 97:
-                ciphertext[i] += 26
+        elif 97 <= ciphertext_list[i] <= 122:
+            ciphertext_list[i] -= keyword_list[j] - 65
+            while ciphertext_list[i] < 97:
+                ciphertext_list[i] += 26
         j += 1
-        ciphertext[i] = chr(ciphertext[i])
     line = ""
-    plaintext = line.join(ciphertext)
+    plaintext = line.join(map(chr, ciphertext_list))
     return plaintext
-

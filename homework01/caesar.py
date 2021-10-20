@@ -14,19 +14,18 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    plaintext = list(map(ord, plaintext))
-    for i in range(len(plaintext)):
-        if 65 <= plaintext[i] <= 90:
-            plaintext[i] += shift
-            while plaintext[i] > 90:
-                plaintext[i] -= 26
-        elif 97 <= plaintext[i] <= 122:
-            plaintext[i] += shift
-            while plaintext[i] > 122:
-                plaintext[i] -= 26
-        plaintext[i] = chr(plaintext[i])
+    plaintext_list = list(map(ord, plaintext))
+    for i in range(len(plaintext_list)):
+        if 65 <= plaintext_list[i] <= 90:
+            plaintext_list[i] += shift
+            while plaintext_list[i] > 90:
+                plaintext_list[i] -= 26
+        elif 97 <= plaintext_list[i] <= 122:
+            plaintext_list[i] += shift
+            while plaintext_list[i] > 122:
+                plaintext_list[i] -= 26
     line = ""
-    ciphertext = line.join(plaintext)
+    ciphertext = line.join(map(chr, plaintext_list))
     return ciphertext
 
 
@@ -43,19 +42,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    ciphertext = list(map(ord, ciphertext))
-    for i in range(len(ciphertext)):
-        if 65 <= ciphertext[i] <= 90:
-            ciphertext[i] -= shift
-            while ciphertext[i] < 65:
-                ciphertext[i] += 26
-        elif 97 <= ciphertext[i] <= 122:
-            ciphertext[i] -= shift
-            while ciphertext[i] < 97:
-                ciphertext[i] += 26
-        ciphertext[i] = chr(ciphertext[i])
+    ciphertext_list = list(map(ord, ciphertext))
+    for i in range(len(ciphertext_list)):
+        if 65 <= ciphertext_list[i] <= 90:
+            ciphertext_list[i] -= shift
+            while ciphertext_list[i] < 65:
+                ciphertext_list[i] += 26
+        elif 97 <= ciphertext_list[i] <= 122:
+            ciphertext_list[i] -= shift
+            while ciphertext_list[i] < 97:
+                ciphertext_list[i] += 26
     line = ""
-    plaintext = line.join(ciphertext)
+    plaintext = line.join(map(chr, ciphertext_list))
     return plaintext
 
 
