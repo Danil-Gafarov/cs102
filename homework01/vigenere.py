@@ -20,12 +20,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             plaintext[i] += (keyword[j] - 65)
             while plaintext[i] > 90:
                 plaintext[i] -= 26
-            j += 1
+
         elif 97 <= plaintext[i] <= 122:
             plaintext[i] += (keyword[j] - 65)
             while plaintext[i] > 122:
                 plaintext[i] -= 26
-            j += 1
+        j += 1
         plaintext[i] = chr(plaintext[i])
     line = ""
     ciphertext = line.join(plaintext)
@@ -54,13 +54,14 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
             ciphertext[i] -= (keyword[j] - 65)
             while ciphertext[i] < 65:
                 ciphertext[i] += 26
-            j += 1
+
         elif 97 <= ciphertext[i] <= 122:
-            ciphertext[i] += (keyword[j] - 65)
+            ciphertext[i] -= (keyword[j] - 65)
             while ciphertext[i] < 97:
                 ciphertext[i] += 26
-            j += 1
+        j += 1
         ciphertext[i] = chr(ciphertext[i])
     line = ""
     plaintext = line.join(ciphertext)
     return plaintext
+
