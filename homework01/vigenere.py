@@ -47,10 +47,10 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     keyword = keyword.upper()
     ciphertext_list = list(map(ord, ciphertext))
     keyword_list = list(map(ord, keyword))
-    '''
+    """
     plaintext_list = list(map(ord, plaintext))
     keyword_list = list(map(ord, keyword))
-    '''
+    """
 
     j = 0
     for i in range(len(ciphertext_list)):
