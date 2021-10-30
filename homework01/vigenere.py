@@ -1,69 +1,39 @@
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
-    """
-    Encrypts plaintext using a Vigenere cipher.
 
-    >>> encrypt_vigenere("PYTHON", "A")
-    'PYTHON'
-    >>> encrypt_vigenere("python", "a")
-    'python'
-    >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
-    'LXFOPVEFRNHR'
-    """
     while len(keyword) < len(plaintext):
         keyword += keyword
     keyword = keyword.upper()
-    plaintext_list = list(map(ord, plaintext))
-    keyword_list = list(map(ord, keyword))
-    j = 0
-    for i in range(len(plaintext_list)):
-        if 65 <= plaintext_list[i] <= 90:
-            plaintext_list[i] += keyword_list[j] - 65
-            while plaintext_list[i] > 90:
-                plaintext_list[i] -= 26
 
-        elif 97 <= plaintext_list[i] <= 122:
-            plaintext_list[i] += keyword_list[j] - 65
-            while plaintext_list[i] > 122:
-                plaintext_list[i] -= 26
+    ciphertext = ""
+    j = 0  # счётчик для перебора ключа
+    for char in plaintext:
+        shift = ord(keyword[j]) - ord("A")
+        if char.isupper():
+            ciphertext += chr((ord(char) - ord("A") + shift) % 26 + ord("A"))
+        elif char.islower():
+            ciphertext += chr((ord(char) - ord("a") + shift) % 26 + ord("a"))
+        else:
+            ciphertext += char
         j += 1
-    line = ""
-    ciphertext = line.join(map(chr, plaintext_list))
     return ciphertext
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
-    """
-    Decrypts a ciphertext using a Vigenere cipher.
 
-    >>> decrypt_vigenere("PYTHON", "A")
-    'PYTHON'
-    >>> decrypt_vigenere("python", "a")
-    'python'
-    >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
-    'ATTACKATDAWN'
-    """
     while len(keyword) < len(ciphertext):
         keyword += keyword
     keyword = keyword.upper()
-    ciphertext_list = list(map(ord, ciphertext))
-    keyword_list = list(map(ord, keyword))
-    """
-    plaintext_list = list(map(ord, plaintext))
-    keyword_list = list(map(ord, keyword))
-    """
 
+    plaintext = ""
     j = 0
-    for i in range(len(ciphertext_list)):
-        if 65 <= ciphertext_list[i] <= 90:
-            ciphertext_list[i] -= keyword_list[j] - 65
-            while ciphertext_list[i] < 65:
-                ciphertext_list[i] += 26
+    for char in ciphertext:
+        shift = ord(keyword[j]) - ord("A")
+        if char.isupper():
+            plaintext += chr((ord(char) - ord("A") - shift) % 26 + ord("A"))
+        elif char.islower():
+            plaintext += chr((ord(char) - ord("a") - shift) % 26 + ord("a"))
 
-        elif 97 <= ciphertext_list[i] <= 122:
-            ciphertext_list[i] -= keyword_list[j] - 65
-            while ciphertext_list[i] < 97:
-                ciphertext_list[i] += 26
+        else:
+            plaintext += char
         j += 1
-    line = ""
-    plaintext = line.join(map(chr, ciphertext_list))
     return plaintext

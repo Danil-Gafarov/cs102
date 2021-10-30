@@ -14,18 +14,14 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    plaintext_list = list(map(ord, plaintext))
-    for i in range(len(plaintext_list)):
-        if 65 <= plaintext_list[i] <= 90:
-            plaintext_list[i] += shift
-            while plaintext_list[i] > 90:
-                plaintext_list[i] -= 26
-        elif 97 <= plaintext_list[i] <= 122:
-            plaintext_list[i] += shift
-            while plaintext_list[i] > 122:
-                plaintext_list[i] -= 26
-    line = ""
-    ciphertext = line.join(map(chr, plaintext_list))
+    ciphertext = ""
+    for char in plaintext:
+        if char.isupper():
+            ciphertext += chr((ord(char) + shift - ord("A")) % 26 + ord("A"))
+        elif char.islower():
+            ciphertext += chr((ord(char) + shift - ord("a")) % 26 + ord("a"))
+        else:
+            ciphertext += char
     return ciphertext
 
 
@@ -42,18 +38,14 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    ciphertext_list = list(map(ord, ciphertext))
-    for i in range(len(ciphertext_list)):
-        if 65 <= ciphertext_list[i] <= 90:
-            ciphertext_list[i] -= shift
-            while ciphertext_list[i] < 65:
-                ciphertext_list[i] += 26
-        elif 97 <= ciphertext_list[i] <= 122:
-            ciphertext_list[i] -= shift
-            while ciphertext_list[i] < 97:
-                ciphertext_list[i] += 26
-    line = ""
-    plaintext = line.join(map(chr, ciphertext_list))
+    plaintext = ""
+    for char in ciphertext:
+        if char.isupper():
+            plaintext += chr((ord(char) - shift - ord("A")) % 26 + ord("A"))
+        elif char.islower():
+            plaintext += chr((ord(char) - shift - ord("a")) % 26 + ord("a"))
+        else:
+            plaintext += char
     return plaintext
 
 
