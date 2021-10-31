@@ -1,7 +1,7 @@
 def get_greeting(name: str) -> str:
-    pass
+    return "Hello, " + name + "!"
 
 
 if __name__ == "__main__":
-    message = get_greeting("World")
-    print(message)
+    MESSAGE = get_greeting("World")
+    print(MESSAGE)
