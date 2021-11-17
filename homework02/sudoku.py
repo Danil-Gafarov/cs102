@@ -157,26 +157,26 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
-    # TODO: Add doctests with bad puzzles
-    for row in solution:
-        if len(set(row)) != 9 or "." in row:
+
+    for line in solution:
+        if len(set(line)) != 9 or "." in line:
             return False
 
     transposed = [list(i) for i in zip(*solution)]  # Транспонирование матрицы
-    for row in transposed:
-        if len(set(row)) != 9 or "." in row:
+    for line in transposed:
+        if len(set(line)) != 9 or "." in line:
             return False
 
     blocks = []
-    for row in range(0, 9, 3):
-        for col in range(0, 9, 3):
+    for q in range(0, 9, 3):
+        for r in range(0, 9, 3):
             block = []
             for i in range(3):
                 for j in range(3):
-                    block.append(solution[row // 3 * 3 + i][col // 3 * 3 + j])
+                    block.append(solution[q // 3 * 3 + i][r // 3 * 3 + j])
             blocks.append(block)
-    for row in blocks:
-        if len(set(row)) != 9 or "." in row:
+    for line in blocks:
+        if len(set(line)) != 9 or "." in line:
             return False
 
     return True
@@ -207,7 +207,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     n = N
     if n > 81:
         n = 81
-    puzzle = solve([["." for x in range(9)] for y in range(9)])
+    puzzle = solve([["." for _ in range(9)] for _ in range(9)])
     deleted_counter = 0
     while n + deleted_counter < 81:
         random_row = random.randint(0, 8)
@@ -216,6 +216,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
             if puzzle[random_row][random_col] != ".":
                 puzzle[random_row][random_col] = "."
                 deleted_counter += 1
+    assert puzzle is not None
     return puzzle
 
 
