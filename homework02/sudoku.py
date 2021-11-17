@@ -38,7 +38,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
     """
-    res = [values[x: x + n] for x in range(0, len(values), n)]
+    res = [values[x : x + n] for x in range(0, len(values), n)]
     return res
 
 
