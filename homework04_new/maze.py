@@ -1,4 +1,3 @@
-"""Генерирует лабиринт и решает его"""
 from random import choice
 from typing import List, Optional, Tuple, Union
 
@@ -6,7 +5,6 @@ import pandas as pd
 
 
 def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
-    """генерация поля"""
     return [["■"] * cols for _ in range(rows)]
 
 
@@ -165,7 +163,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     :param coord:
     :return:
     """
-
     pass
 
 
