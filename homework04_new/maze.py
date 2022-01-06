@@ -34,7 +34,7 @@ def remove_wall(
     return grid
 
 
-def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> List[List[str]]:
+def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> List[List[Union[str, int]]]:
     """
 
     :param rows:
@@ -172,7 +172,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
 
 
 def solve_maze(
-    grid: List[List[Union[str, int]]],
+    grid: List[List[str]],
 ) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
     """
 
@@ -206,7 +206,7 @@ def solve_maze(
 
 
 def add_path_to_grid(
-    grid: List[List[Union[str, int]]], path: Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]
+    grid: List[List[str]], path: Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]
 ) -> List[List[Union[str, int]]]:
     """
 
