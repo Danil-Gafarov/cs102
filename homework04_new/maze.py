@@ -36,7 +36,7 @@ def remove_wall(
 
 def bin_tree_maze(
     rows: int = 15, cols: int = 15, random_exit: bool = True
-) -> List[List[Union[str, int]]]:
+) -> List[List[str]]:
     """
 
     :param rows:
