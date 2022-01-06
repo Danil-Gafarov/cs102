@@ -34,9 +34,7 @@ def remove_wall(
     return grid
 
 
-def bin_tree_maze(
-    rows: int = 15, cols: int = 15, random_exit: bool = True
-) -> List[List[str]]:
+def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> List[List[str]]:
     """
 
     :param rows:
