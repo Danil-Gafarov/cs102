@@ -13,24 +13,22 @@ def remove_wall(
     grid: List[List[Union[str, int]]], coord: Tuple[int, int]
 ) -> List[List[Union[str, int]]]:
     """
+
     :param grid:
     :param coord:
     :return:
     """
-    cols = len(grid[0])
-    x, y = coord
-    if x < 2:
-        if y < cols - 2:
-            grid[x][y + 1] = " "
-    elif y + 2 >= cols:
-        grid[x - 1][y] = " "
-    else:
-        direction = choice(("up", "right"))
-        if direction == "right":
-            grid[x][y + 1] = " "
-        elif direction == "up":
-            grid[x - 1][y] = " "
-
+    direction = choice(("up", "right"))
+    if direction == "up":
+        if coord[0] != 1:
+            grid[coord[0] - 1][coord[1]] = " "
+        elif coord[1] + 2 != len(grid[0]):
+            grid[coord[0]][coord[1] + 1] = " "
+    elif direction == "right":
+        if coord[1] + 2 != len(grid[0]):
+            grid[coord[0]][coord[1] + 1] = " "
+        elif coord[0] != 1:
+            grid[coord[0] - 1][coord[1]] = " "
     return grid
 
 
@@ -47,14 +45,13 @@ def bin_tree_maze(
 
     grid = create_grid(rows, cols)
     empty_cells = []
-
     for x, row in enumerate(grid):
         for y, _ in enumerate(row):
             if x % 2 == 1 and y % 2 == 1:
                 grid[x][y] = " "
                 empty_cells.append((x, y))
 
-    for cell in empty_cells:
+    for _, cell in enumerate(empty_cells):
         remove_wall(grid, cell)
     # 1. выбрать любую клетку
     # 2. выбрать направление: наверх или направо.
@@ -79,24 +76,19 @@ def bin_tree_maze(
 
 def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     """
-
     :param grid:
     :return:
     """
-
     exits = []
-    for x, row in enumerate(grid):
-        for y, _ in enumerate(row):
-            if grid[x][y] == "X":
-                exits.append((x, y))
-        if len(exits) == 2:
-            break
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if grid[i][j] == "X":
+                exits.append((i, j))
     return exits
 
 
 def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str, int]]]:
     """
-
     :param grid:
     :param k:
     :return:
@@ -125,36 +117,29 @@ def shortest_path(
     :param exit_coord:
     :return:
     """
-    path = []
-    rows = len(grid)
-    cols = len(grid[0])
-    k = int(grid[exit_coord[0]][exit_coord[1]])
+    path = [exit_coord]
+    x, y = exit_coord[0], exit_coord[1]
+    k = int(grid[x][y])
     while k != 1:
-        i, j = exit_coord[0], exit_coord[1]
-        path.append((i, j))
-        if i - 1 >= 0:
-            if grid[i - 1][j] == k - 1:
-                k -= 1
-                exit_coord = (i - 1, j)
-        if i + 1 < rows:
-            if grid[i + 1][j] == k - 1:
-                k -= 1
-                exit_coord = (i + 1, j)
-        if j - 1 >= 0:
-            if grid[i][j - 1] == k - 1:
-                k -= 1
-                exit_coord = (i, j - 1)
-        if j + 1 < cols:
-            if grid[i][j + 1] == k - 1:
-                k -= 1
-                exit_coord = (i, j + 1)
-    path.append((exit_coord[0], exit_coord[1]))
+        if y != len(grid[0]) - 1 and grid[x][y + 1] == k - 1:
+            y += 1
+            path.append((x, y))
+        if grid[x][y - 1] == k - 1 and y != 0:
+            y -= 1
+            path.append((x, y))
+        if x != len(grid) - 1 and grid[x + 1][y] == k - 1:
+            x += 1
+            path.append((x, y))
+        if grid[x - 1][y] == k - 1 and x != 0:
+            x -= 1
+            path.append((x, y))
+
+        k -= 1
     return path
 
 
 def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
     """
-
     :param grid:
     :param coord:
     :return:
@@ -177,7 +162,6 @@ def solve_maze(
     grid: List[List[Union[str, int]]],
 ) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
     """
-
     :param grid:
     :return:
     """
@@ -211,7 +195,6 @@ def add_path_to_grid(
     grid: List[List[Union[str, int]]], path: Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]
 ) -> List[List[Union[str, int]]]:
     """
-
     :param grid:
     :param path:
     :return:
