@@ -38,8 +38,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
     """
-    res = [values[x : x + n] for x in range(0, len(values), n)]
-    return res
+    return [values[x : x + n] for x in range(0, len(values), n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -66,10 +65,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     ['3', '6', '9']
     """
     col = pos[1]
-    res = []
-    for row in grid:
-        res.append(row[col])
-    return res
+    return [row[col] for row in grid]
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -84,11 +80,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
     row, col = pos
-    block = []
-    for i in range(3):
-        for j in range(3):
-            block.append(grid[row // 3 * 3 + i][col // 3 * 3 + j])
-    return block
+    return [grid[row // 3 * 3 + i][col // 3 * 3 + j] for i in range(3) for j in range(3)]
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
@@ -140,19 +132,18 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    find = find_empty_positions(grid)
-    if not find:
-        return grid
-    row, col = find
-
-    for i in find_possible_values(grid, find):
-        grid[row][col] = i
-        solution = solve(grid)
-        if solution != [[]]:
-            return solution
-    grid[row][col] = "."
-
-    return [[]]
+    positions = find_empty_positions(grid)
+    if positions:
+        values = find_possible_values(grid, positions)
+        if len(values) > 0:
+            for value in values:
+                grid[positions[0]][positions[1]] = value
+                solution = solve(grid)
+                if solution:
+                    return solution
+                grid[positions[0]][positions[1]] = "."
+        return None
+    return grid
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
