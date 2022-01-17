@@ -3,14 +3,21 @@ import typing as tp
 
 
 def is_prime(n: int) -> bool:
-    if n == 1:
+    """
+    Tests to see if a number is prime.
+    >>> is_prime(2)
+    True
+    >>> is_prime(11)
+    True
+    >>> is_prime(8)
+    False
+    """
+    if n < 2:
         return False
-    x = True
     for i in range(2, n):
-        if n % i == 0:
-            x = False
-            break
-    return x
+        if not n % i:
+            return False
+    return True
 
 
 def gcd(a: int, b: int) -> int:
