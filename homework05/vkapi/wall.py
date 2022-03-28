@@ -5,7 +5,6 @@ import typing as tp
 from string import Template
 
 import pandas  # type: ignore
-
 from vkapi import config, session  # type: ignore
 from vkapi.exceptions import APIError  # type: ignore
 
