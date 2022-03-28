@@ -52,7 +52,7 @@ def get_posts_2500(
         "access_token": config.VK_CONFIG["access_token"],
         "v": config.VK_CONFIG["version"],
     }
-    response = session.post("execute", data=data)
+    response = session.post("execute", data=data)  # type: ignore
     if "error" in response.json() or not response.ok:
         raise APIError(response.json()["error"]["error_msg"])
     return response.json()["response"]["items"]
@@ -97,7 +97,7 @@ def get_wall_execute(
 }});
 """
     data = {"code": code}
-    response = session.post("execute", data=data).json()
+    response = session.post("execute", data=data).json()  # type: ignore
     if "error" in response:
         raise APIError(response["error"]["error_msg"])
     if not progress:

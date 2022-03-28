@@ -38,7 +38,7 @@ def get_friends(
         "fields": ",".join(fields) if fields else "",
         "offset": offset,
     }
-    response = session.get("friends.get", params=params)
+    response = session.get("friends.get", params=params)  # type: ignore
     if "error" in response.json() or not response.ok:
         raise exceptions.APIError(response.json()["error"]["error_msg"])
     return FriendsResponse(**response.json()["response"])
@@ -90,7 +90,7 @@ def get_mutual(
             "count": count,
             "offset": offset,
         }
-        response = session.get(f"friends.getMutual", params=params)
+        response = session.get(f"friends.getMutual", params=params)  # type: ignore
         if response.status_code != 200:
             raise exceptions.APIError
         offset += 100
