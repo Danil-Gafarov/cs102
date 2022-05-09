@@ -78,3 +78,6 @@ def describe_communities(
                     data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
+
+net = ego_network(user_id=280263434)
+plot_communities(net)

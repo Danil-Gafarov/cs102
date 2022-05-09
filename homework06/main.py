@@ -1,16 +1,16 @@
 import typing as tp
-from homework06.scrapper import get_news
 
 from bottle import redirect, request, route, run, view
-
 from buyes_classifier import NaiveBayesClassifier
 from db import *
 from news import News
 from textutils import clean
 
+from homework06.scrapper import get_news
+
 classifier = NaiveBayesClassifier()
 normalizer = {"good": 0, "maybe": 1, "never": 2}
-colors = {0: "#43f764", 1: "#f79e05", 2: "#43f764"}
+colors = {0: "#5bf71e", 1: "#f79e05", 2: "#f71b07"}
 conn = make_connection()
 
 
@@ -97,7 +97,7 @@ def update_news() -> None:
     """
     Updates news in db
     """
-    add_news(conn, get_news("https://news.ycombinator.com/", 100))
+    add_news(conn, get_news("https://news.ycombinator.com/", 50))
     fit_classifier()
     redirect(get_redirect_path(request.headers.environ.get("HTTP_REFERER", "")))
 
